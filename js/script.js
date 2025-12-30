@@ -25,10 +25,12 @@ const navLinks = document.querySelectorAll('.nav-menu a');
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
         navMenu.classList.remove('active');
-        const spans = mobileMenuToggle.querySelectorAll('span');
-        spans[0].style.transform = '';
-        spans[1].style.opacity = '1';
-        spans[2].style.transform = '';
+        if (mobileMenuToggle) {
+            const spans = mobileMenuToggle.querySelectorAll('span');
+            spans[0].style.transform = '';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = '';
+        }
     });
 });
 
@@ -215,8 +217,10 @@ if (searchButton && searchInput) {
 const quoteButtons = document.querySelectorAll('.btn-secondary');
 quoteButtons.forEach(button => {
     button.addEventListener('click', (e) => {
-        const providerName = e.target.closest('.provider-card')?.querySelector('h3')?.textContent;
-        if (providerName) {
+        const providerCard = e.target.closest('.provider-card');
+        const providerNameElement = providerCard?.querySelector('h3');
+        const providerName = providerNameElement?.textContent?.trim();
+        if (providerName && providerName.length > 0) {
             showNotification(`Quote request sent to ${providerName}!`, 'success');
         } else {
             showNotification('Quote request sent!', 'success');
@@ -279,20 +283,17 @@ document.querySelectorAll('.service-card, .provider-card, .step, .feature, .test
 const footerYear = document.querySelector('.footer-bottom p');
 if (footerYear) {
     const currentYear = new Date().getFullYear();
-    footerYear.textContent = footerYear.textContent.replace('2024', currentYear);
+    footerYear.textContent = `© ${currentYear} ProFix Masters Center. All rights reserved.`;
 }
 
 // Lazy Loading for Images (if images are added)
 if ('loading' in HTMLImageElement.prototype) {
     const images = document.querySelectorAll('img[loading="lazy"]');
     images.forEach(img => {
-        img.src = img.dataset.src;
+        if (img.dataset.src) {
+            img.src = img.dataset.src;
+        }
     });
-} else {
-    // Fallback for browsers that don't support lazy loading
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
-    document.body.appendChild(script);
 }
 
 // Performance: Debounce scroll events
@@ -358,5 +359,3 @@ const createBackToTopButton = () => {
 
 // Initialize back to top button
 createBackToTopButton();
-
-console.log('ProFix Masters Center - Website loaded successfully!');
