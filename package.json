@@ -1,0 +1,12 @@
+{
+  "name": "profix-masters-center",
+  "version": "1.0.0",
+  "description": "A modern service marketplace website for AC repair, cleaning, and home maintenance services.\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
